@@ -34,15 +34,15 @@ class ContaController {
             const poupanca = new Poupanca(elementoNumero.value,
                 Number(elementoSaldo.value), elementoAniversario.value);
             this.repositorioContas.adicionar(poupanca);
-            this.inserirContaNoHTML(poupanca);
-            console.log(poupanca)
-            console.log(poupanca.dataAniversario)
+            this.inserirPoupancaNoHTML(poupanca);
+            // console.log(poupanca)
+            // console.log(poupanca.dataAniversario)
         }
         if (tipoContaValor == "contabonificada") {
             const contab = new ContaBonificada(elementoNumero.value,
                 Number(elementoSaldo.value));
             this.repositorioContas.adicionar(contab);
-            this.inserirContaNoHTML(contab);
+            this.inserirContaBonificadaNoHTML(contab);
             // console.log(contab)
         }
 
@@ -51,6 +51,36 @@ class ContaController {
     inserirContaNoHTML(conta) {
         const elementoP = document.createElement('p');
         elementoP.textContent = 'Conta ' + conta.numero + ': ' + conta.saldo;
+        const botaoApagar = document.createElement('button');
+        botaoApagar.textContent = 'X';
+
+        botaoApagar.addEventListener('click', (event) => {
+            this.repositorioContas.remover(conta.numero);
+            event.target.parentElement.remove();
+        });
+
+        elementoP.appendChild(botaoApagar);
+        document.body.appendChild(elementoP);
+    }
+
+    inserirContaBonificadaNoHTML(conta) {
+        const elementoP = document.createElement('p');
+        elementoP.textContent = 'Conta Bonifcada' + conta.numero + ': ' + conta.saldo;
+        const botaoApagar = document.createElement('button');
+        botaoApagar.textContent = 'X';
+
+        botaoApagar.addEventListener('click', (event) => {
+            this.repositorioContas.remover(conta.numero);
+            event.target.parentElement.remove();
+        });
+
+        elementoP.appendChild(botaoApagar);
+        document.body.appendChild(elementoP);
+    }
+
+    inserirPoupancaNoHTML(conta) {
+        const elementoP = document.createElement('p');
+        elementoP.textContent = 'Poupanca ' + conta.numero + ': ' + conta.saldo + " Aniversario: " + conta.dataAniversario;
         const botaoApagar = document.createElement('button');
         botaoApagar.textContent = 'X';
 
